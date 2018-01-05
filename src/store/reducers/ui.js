@@ -6,6 +6,7 @@ const initialState = {
   showNewPurchaseDialog: false,
   authLoading: false,
   authErrorMessage: null,
+  isAuthed: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -19,6 +20,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         showLoginDialog: !state.showLoginDialog,
+        authErrorMessage: null,
       };
     case actionTypes.TOGGLE_NEW_PURCHASE_DIALOG:
       return {
@@ -39,6 +41,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         authErrorMessage: null,
+      };
+    case actionTypes.TOGGLE_AUTH_STATE:
+      return {
+        ...state,
+        isAuthed: !state.isAuthed,
       };
     default:
       return state;

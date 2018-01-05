@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import { grey, indigo, red } from 'material-ui/colors';
+import { grey, green, red } from 'material-ui/colors';
 import 'typeface-roboto';
 import './index.css';
 
@@ -19,7 +19,7 @@ import { watchAuth } from './store/sagas';
 
 const muiTheme = createMuiTheme({
   palette: {
-    primary: indigo,
+    primary: green,
     secondary: grey,
     error: red,
     type: 'light',

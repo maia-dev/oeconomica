@@ -36,3 +36,9 @@ export const clearLoginError = () => {
     type: actionTypes.CLEAR_LOGIN_ERROR,
   };
 };
+
+export const toggleAuthState = () => {
+  return {
+    type: actionTypes.TOGGLE_AUTH_STATE,
+  };
+};

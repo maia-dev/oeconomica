@@ -9,46 +9,88 @@ import HomeIcon from 'material-ui-icons/Home';
 import TimelineIcon from 'material-ui-icons/Timeline';
 import ShoppingCartIcon from 'material-ui-icons/ShoppingCart';
 import PaymentIcon from 'material-ui-icons/Payment';
+import DoneAllIcon from 'material-ui-icons/DoneAll';
+import PersonAddIcon from 'material-ui-icons/PersonAdd';
+import CachedIcon from 'material-ui-icons/Cached';
 
+import Aux from '../../../hoc/Aux/Aux';
 import * as actions from '../../../store/actions';
 
-const navItems = props => (
-  <MenuList>
-    <Link to="/" style={{ textDecoration: 'none' }}>
+const navItems = props => {
+  const authItems = props.isAuthed ? (
+    <Aux>
+      <Link to="/balance" style={{ textDecoration: 'none' }}>
+        <MenuItem button={true}>
+          <ListItemIcon>
+            <TimelineIcon />
+          </ListItemIcon>
+          <ListItemText primary="Balance" />
+        </MenuItem>
+      </Link>
+
+      <Divider />
+
+      <MenuItem button={true} onClick={props.onToggleNewPurchaseDialog}>
+        <ListItemIcon>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+        <ListItemText primary="New Puchase" />
+      </MenuItem>
+
       <MenuItem>
         <ListItemIcon>
-          <HomeIcon />
+          <PaymentIcon />
         </ListItemIcon>
-        <ListItemText primary="Home" />
+        <ListItemText primary="New Payment" />
       </MenuItem>
-    </Link>
 
-    <Link to="/balance" style={{ textDecoration: 'none' }}>
-      <MenuItem button={true}>
+      <Divider />
+
+      <MenuItem>
         <ListItemIcon>
-          <TimelineIcon />
+          <CachedIcon />
         </ListItemIcon>
-        <ListItemText primary="Balance" />
+        <ListItemText primary="Pending Transactions" />
       </MenuItem>
-    </Link>
 
-    <Divider />
+      <MenuItem>
+        <ListItemIcon>
+          <DoneAllIcon />
+        </ListItemIcon>
+        <ListItemText primary="Validate Purchases" />
+      </MenuItem>
 
-    <MenuItem button={true} onClick={props.onToggleNewPurchaseDialog}>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="New Puchase" />
-    </MenuItem>
+      <Divider />
 
-    <MenuItem>
-      <ListItemIcon>
-        <PaymentIcon />
-      </ListItemIcon>
-      <ListItemText primary="New Payment" />
-    </MenuItem>
-  </MenuList>
-);
+      <MenuItem>
+        <ListItemIcon>
+          <PersonAddIcon />
+        </ListItemIcon>
+        <ListItemText primary="Create Invite" />
+      </MenuItem>
+    </Aux>
+  ) : null;
+
+  return (
+    <MenuList>
+      <Link to="/" style={{ textDecoration: 'none' }}>
+        <MenuItem>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </MenuItem>
+      </Link>
+      {authItems}
+    </MenuList>
+  );
+};
+
+const mapStateToProps = state => {
+  return {
+    isAuthed: state.ui.isAuthed,
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -57,4 +99,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(navItems);
+export default connect(mapStateToProps, mapDispatchToProps)(navItems);

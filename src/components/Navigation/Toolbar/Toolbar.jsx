@@ -26,6 +26,17 @@ const styles = {
 
 const toolbar = props => {
   const { classes } = props;
+
+  const authButton = props.isAuthed ? (
+    <Button color="contrast" onClick={props.onLogout}>
+      Logout
+    </Button>
+  ) : (
+    <Button color="contrast" onClick={props.onToggleLoginDialog}>
+      Login
+    </Button>
+  );
+
   return (
     <div className={classes.root}>
       <Appbar position="static">
@@ -41,20 +52,27 @@ const toolbar = props => {
           <Typography type="title" color="inherit" className={classes.flex}>
             Oeconomica
           </Typography>
-          <Button color="contrast" onClick={props.onToggleLoginDialog}>
-            Login
-          </Button>
+          {authButton}
         </Toolbar>
       </Appbar>
     </div>
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    isAuthed: state.ui.isAuthed,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     onToggleLoginDialog: () => dispatch(actions.toggleLoginDialog()),
     onToggleSideDrawer: () => dispatch(actions.toggleSideDrawer()),
+    onLogout: () => dispatch(actions.logoutStart()),
   };
 };
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(toolbar));
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles)(toolbar)
+);
